@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <title>LSDDA Coursework</title>
+  
+    <style>
+	.display{
+	display: table-cell !important
+	}
+	.printQuery td, .printQuery th{
+	display: none;
+	}
+        table{
+            text-align: center;
+            border: 1px black solid;
+        }
+        th{
+            border-bottom: 1px black solid;
+            border-right: 1px black solid;
+        }
+        td{
+            border-right: 1px black solid;
+            border-bottom: 1px black solid;
+        }
+        .form-panel{
+            outline: 1px black solid;
+            margin: 10px;
+            padding: 10px;
+        }
+        .displayOptions{
+            margin: 10px 0;
+        }
+        .query{
+             margin: 10px 0;
+         }
+    .query input[type=text],.query input[type=number], .query select{
+        margin: 10px 0;
+        width: 173px;
+    }
+        .checkAll{
+            width: auto;
+            align-items: flex-start;
+            text-align: center;
+            cursor: default;
+            color: buttontext;
+            background-color: buttonface;
+            box-sizing: border-box;
+            padding: 2px 6px 3px;
+            border-width: 2px;
+            border-style: outset;
+            border-color: buttonface;
+            border-image: initial;
+            text-rendering: auto;
+            letter-spacing: normal;
+            word-spacing: normal;
+            text-transform: none;
+            text-indent: 0px;
+            text-shadow: none;
+            display: inline-block;
+            margin: 0em;
+            font: 400 13.3333px Arial;
+        }
+    </style>
+</head>
+<body>
+<button onclick="javascript:printAll()">Print All</button>
+<button onclick="javascript:remove()">Clear</button>
+<div class="form-panel">
+    <h1>DB Query</h1>
+<form id="queryForm" onsubmit="return dbHandler()">
+<div class="displayOptions">
+    Show Columns<br>
+
+    <input type="checkbox" value="artist_id">artist id
+    <input type="checkbox" value="artist_name">artist name
+    <input type="checkbox" value="song_title">song title
+    <input type="checkbox" value="id">song id
+    <input type="checkbox" value="key">key
+    <input type="checkbox" value="energy">energy
+    <input type="checkbox" value="liveness">liveness
+    <input type="checkbox" value="tempo">tempo
+    <input type="checkbox" value="speechiness">speechiness
+    <input type="checkbox" value="Sound_quailty">Sound_quailty
+    <input type="checkbox" value="instrumentalness">instrumentalness
+    <input type="checkbox" value="mode">mode
+    <input type="checkbox" value="time_signature">time_signature
+    <input type="checkbox" value="duration">duration
+    <input type="checkbox" value="loudness">loudness
+    <input type="checkbox" value="valence">valence
+    <input type="checkbox" value="danceability">danceability
+    <input type="checkbox" value="years">years<br>
+    <div class="checkAll">Check All</div>
+	</div>
+    <div class="query">
+    Where <select name="where">
+    <option value="artist_id">artist id</option>
+    <option value="artist_name">artist name</option>
+    <option value="song_title">song title</option>
+    <option value="id">song id</option>
+    <option value="key">key</option>
+    <option value="energy">energy</option>
+    <option value="liveness">liveness</option>
+    <option value="tempo">tempo</option>
+    <option value="speechiness">speechiness</option>
+    <option value="Sound_quailty">Sound_quailty</option>
+    <option value="instrumentalness">instrumentalness</option>
+    <option value="mode">mode</option>
+    <option value="time_signature">time_signature</option>
+    <option value="duration">duration</option>
+    <option value="loudness">loudness</option>
+    <option value="valence">valence</option>
+    <option value="danceability">danceability</option>
+    <option value="years">years</option>
+</select> is <input name="name" type="text" placeholder="Any"><br>
+Sort by: <select name="title">
+    <option value="artist_id">artist id</option>
+    <option value="artist_name">artist name</option>
+    <option value="song_title">song title</option>
+    <option value="id">song id</option>
+    <option value="key">key</option>
+    <option value="energy">energy</option>
+    <option value="liveness">liveness</option>
+    <option value="tempo">tempo</option>
+    <option value="speechiness">speechiness</option>
+    <option value="Sound_quailty">Sound_quailty</option>
+    <option value="instrumentalness">instrumentalness</option>
+    <option value="mode">mode</option>
+    <option value="time_signature">time_signature</option>
+    <option value="duration">duration</option>
+    <option value="loudness">loudness</option>
+    <option value="valence">valence</option>
+    <option value="danceability">danceability</option>
+    <option value="years">years</option>
+</select>
+    <input type="radio" name="sort" value="Ascending" checked>Ascending
+    <input type="radio" name="sort" value="Descending">Descending<br>
+    Limit: <input name="limit" type="number">
+    <input type="submit">
+    </div>
+</form>
+    <button onclick="javascript:resetForm()">Reset</button>
+</div>
+<div id="results">
+
+</div>
+ <script>
+     $(document).ready(function () {
+         $('.checkAll').click(function () {
+             if($('.displayOptions input:checked').length == $('.displayOptions input').length){
+                 $('.displayOptions input').prop("checked", false);
+             } else {
+                 $('.displayOptions input').prop("checked", true);
+             }
+         });
+     });
+
+     function resetForm() {
+         document.getElementById("queryForm").reset();
+     }
+        function printAll() {
+            $.ajax({
+                type: 'POST',
+                data: {values:"All"},
+                url: 'db.php', // Your form script
+                success: function (msg) {
+                    $('#results').html(msg);
+                }
+            });
+        }
+        function dbHandler() {
+                var formValues = $('form :input');
+                var values = {};
+                formValues.each(function () {
+                    if ($(this).attr('type') == 'radio') {
+                        if ($(this).is(':checked')) {
+                            values[this.name] = $(this).val();
+                        }
+                        } else {
+                        values[this.name] = $(this).val();
+                    }
+                }
+                );
+                $.ajax({
+                    type: 'POST',
+                    data: {values: values},
+                    url: 'db.php',
+                    success: function (msg) {
+                        $('#results').html(msg);
+						$('.displayOptions input:checked').each(function(){
+						var display = $(this).val();	
+						$("."+display).addClass("display");
+				});
+                    }
+                });
+				
+                return false;
+        }
+        function remove() {
+            $('#results').html('');
+        }
+    </script>
+</body>
+</html>
