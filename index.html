@@ -4,53 +4,60 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <meta charset="UTF-8">
     <title>LSDDA Coursework</title>
-  
+
     <style>
-	.display{
-	display: table-cell !important
-	}
-	.printQuery td, .printQuery th{
-	display: none;
-	}
-        table{
+        .display {
+            display: table-cell !important
+        }
+
+        .printQuery td, .printQuery th {
+            display: none;
+        }
+
+        table {
             text-align: center;
             border: 1px black solid;
+            font-size: 15px;
         }
-        th{
+
+        th {
             border-bottom: 1px black solid;
             border-right: 1px black solid;
+            background: lightgray;
         }
-        td{
+
+        td {
             border-right: 1px black solid;
             border-bottom: 1px black solid;
         }
-        .form-panel{
-            outline: 1px black solid;
+
+        .form-panel {
             margin: 10px;
             padding: 10px;
+            background: #e0e0e0;
+            border: 1px solid #c2c2c2;
         }
-        .displayOptions{
+
+        .query {
             margin: 10px 0;
         }
-        .query{
-             margin: 10px 0;
-         }
-    .query input[type=text],.query input[type=number], .query select{
-        margin: 10px 0;
-        width: 173px;
-    }
-        .checkAll{
-            width: auto;
+
+        .query input[type=text], .query input[type=number], .query select {
+            margin: 10px 0;
+            width: 173px;
+        }
+
+        .checkAll {
             align-items: flex-start;
             text-align: center;
             cursor: default;
-            color: buttontext;
-            background-color: buttonface;
+            color: #111111;
+            background: white;
             box-sizing: border-box;
             padding: 2px 6px 3px;
-            border-width: 2px;
+            border-width: 1px;
             border-style: outset;
-            border-color: buttonface;
+            border-color: #ffffff;
             border-image: initial;
             text-rendering: auto;
             letter-spacing: normal;
@@ -61,145 +68,259 @@
             display: inline-block;
             margin: 0em;
             font: 400 13.3333px Arial;
+            width: 150px;
+            height: 30px;
+            line-height: 1.9;
+            margin-left: 20px;
+        }
+
+        .displayOptions {
+            position: fixed;
+            left: 0;
+            height: 100%;
+            background: #ffffff;
+            width: 250px;
+            top: 0;
+            float: left;
+            background: #646464;
+            box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+        }
+
+        body {
+            margin-left: 260px;
+            background: #f4f4f4;
+            font-family: Verdana, sans-serif;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        ul li {
+            border-top: 1px white solid;
+            /*border-left: 1px white solid;*/
+            font-size: 16px;
+            color: #fff;
+            background-color: #646464;
+            padding: 8px 0;
+            cursor: pointer;
+        }
+
+        ul li span {
+            padding-left: 20px;
+        }
+
+        ul li:last-child {
+            border-bottom: 1px white solid;
+        }
+
+        .columnHeader {
+            font-family: Verdana, sans-serif;
+            font-size: 20px;
+            line-height: 1.5;
+            color: white;
+            margin-left: 20px;
+            margin-top: 10px;
+            display: block;
+        }
+
+        .displayOptions input {
+            display: none;
+        }
+
+        .querySubmit {
+            align-items: flex-start;
+            text-align: center;
+            cursor: default;
+            color: white;
+            background: #646464;
+            box-sizing: border-box;
+            padding: 2px 6px 3px;
+            border-width: 1px;
+            border-style: outset;
+            border-color: #ffffff;
+            border-image: initial;
+            text-rendering: auto;
+            letter-spacing: normal;
+            word-spacing: normal;
+            text-transform: none;
+            text-indent: 0px;
+            text-shadow: none;
+            display: inline-block;
+            margin: 0em;
+            font: 400 13.3333px Arial;
+            width: 150px;
+            height: 30px;
+            line-height: 1.9;
+            margin-left: 20px;
+            cursor: pointer;
+        }
+
+        input[type=text], input[type=number], select {
+            padding: 4px;
+            border: 2px solid #ccc;
         }
     </style>
 </head>
 <body>
-<button onclick="javascript:printAll()">Print All</button>
-<button onclick="javascript:remove()">Clear</button>
+<div class="displayOptions">
+
+    <span class="columnHeader"><b>Columns</b></span>
+    <span style="font-size: 13px; color: white;margin: 0 10px; display: block">Click on the columns to appear in the query.</span>
+    <ul>
+        <li><input type="checkbox" value="artist_id"><span>artist id</span></li>
+        <li><input type="checkbox" value="artist_name"><span>artist name</span></li>
+        <li><input type="checkbox" value="song_title"><span>song title</span></li>
+        <li><input type="checkbox" value="id"><span>song id</span></li>
+        <li><input type="checkbox" value="key"><span>key</span></li>
+        <li><input type="checkbox" value="energy"><span>energy</span></li>
+        <li><input type="checkbox" value="liveness"><span>liveness</span></li>
+        <li><input type="checkbox" value="tempo"><span>tempo</span></li>
+        <li><input type="checkbox" value="speechiness"><span>speechiness</span></li>
+        <li><input type="checkbox" value="Sound_quailty"><span>Sound_quailty</span></li>
+        <li><input type="checkbox" value="instrumentalness"><span>instrumentalness</span></li>
+        <li><input type="checkbox" value="mode"><span>mode</span></li>
+        <li><input type="checkbox" value="time_signature"><span>time_signature</span></li>
+        <li><input type="checkbox" value="duration"><span>duration</span></li>
+        <li><input type="checkbox" value="loudness"><span>loudness</span></li>
+        <li><input type="checkbox" value="valence"><span>valence</span></li>
+        <li><input type="checkbox" value="danceability"><span>danceability</span></li>
+        <li><input type="checkbox" value="years"><span>years</span></li>
+    </ul>
+    <div class="checkAll">Select All</div>
+
+</div>
+<button class="querySubmit" onclick="javascript:printAll()">Print All</button>
+<button class="querySubmit" onclick="javascript:remove()">Clear Table</button>
 <div class="form-panel">
     <h1>DB Query</h1>
-<form id="queryForm" onsubmit="return dbHandler()">
-<div class="displayOptions">
-    Show Columns<br>
+    <form id="queryForm" onsubmit="return dbHandler()">
 
-    <input type="checkbox" value="artist_id">artist id
-    <input type="checkbox" value="artist_name">artist name
-    <input type="checkbox" value="song_title">song title
-    <input type="checkbox" value="id">song id
-    <input type="checkbox" value="key">key
-    <input type="checkbox" value="energy">energy
-    <input type="checkbox" value="liveness">liveness
-    <input type="checkbox" value="tempo">tempo
-    <input type="checkbox" value="speechiness">speechiness
-    <input type="checkbox" value="Sound_quailty">Sound_quailty
-    <input type="checkbox" value="instrumentalness">instrumentalness
-    <input type="checkbox" value="mode">mode
-    <input type="checkbox" value="time_signature">time_signature
-    <input type="checkbox" value="duration">duration
-    <input type="checkbox" value="loudness">loudness
-    <input type="checkbox" value="valence">valence
-    <input type="checkbox" value="danceability">danceability
-    <input type="checkbox" value="years">years<br>
-    <div class="checkAll">Check All</div>
-	</div>
-    <div class="query">
-    Where <select name="where">
-    <option value="artist_id">artist id</option>
-    <option value="artist_name">artist name</option>
-    <option value="song_title">song title</option>
-    <option value="id">song id</option>
-    <option value="key">key</option>
-    <option value="energy">energy</option>
-    <option value="liveness">liveness</option>
-    <option value="tempo">tempo</option>
-    <option value="speechiness">speechiness</option>
-    <option value="Sound_quailty">Sound_quailty</option>
-    <option value="instrumentalness">instrumentalness</option>
-    <option value="mode">mode</option>
-    <option value="time_signature">time_signature</option>
-    <option value="duration">duration</option>
-    <option value="loudness">loudness</option>
-    <option value="valence">valence</option>
-    <option value="danceability">danceability</option>
-    <option value="years">years</option>
-</select> is <input name="name" type="text" placeholder="Any"><br>
-Sort by: <select name="title">
-    <option value="artist_id">artist id</option>
-    <option value="artist_name">artist name</option>
-    <option value="song_title">song title</option>
-    <option value="id">song id</option>
-    <option value="key">key</option>
-    <option value="energy">energy</option>
-    <option value="liveness">liveness</option>
-    <option value="tempo">tempo</option>
-    <option value="speechiness">speechiness</option>
-    <option value="Sound_quailty">Sound_quailty</option>
-    <option value="instrumentalness">instrumentalness</option>
-    <option value="mode">mode</option>
-    <option value="time_signature">time_signature</option>
-    <option value="duration">duration</option>
-    <option value="loudness">loudness</option>
-    <option value="valence">valence</option>
-    <option value="danceability">danceability</option>
-    <option value="years">years</option>
-</select>
-    <input type="radio" name="sort" value="Ascending" checked>Ascending
-    <input type="radio" name="sort" value="Descending">Descending<br>
-    Limit: <input name="limit" type="number">
-    <input type="submit">
-    </div>
-</form>
-    <button onclick="javascript:resetForm()">Reset</button>
+        <div class="query">
+            Where <select name="where">
+            <option value="artist_id">artist id</option>
+            <option value="artist_name">artist name</option>
+            <option value="song_title">song title</option>
+            <option value="id">song id</option>
+            <option value="key">key</option>
+            <option value="energy">energy</option>
+            <option value="liveness">liveness</option>
+            <option value="tempo">tempo</option>
+            <option value="speechiness">speechiness</option>
+            <option value="Sound_quailty">Sound_quailty</option>
+            <option value="instrumentalness">instrumentalness</option>
+            <option value="mode">mode</option>
+            <option value="time_signature">time_signature</option>
+            <option value="duration">duration</option>
+            <option value="loudness">loudness</option>
+            <option value="valence">valence</option>
+            <option value="danceability">danceability</option>
+            <option value="years">years</option>
+        </select> is <input name="name" type="text" placeholder="Any"><br>
+            Sort by: <select name="title">
+            <option value="artist_id">artist id</option>
+            <option value="artist_name">artist name</option>
+            <option value="song_title">song title</option>
+            <option value="id">song id</option>
+            <option value="key">key</option>
+            <option value="energy">energy</option>
+            <option value="liveness">liveness</option>
+            <option value="tempo">tempo</option>
+            <option value="speechiness">speechiness</option>
+            <option value="Sound_quailty">Sound_quailty</option>
+            <option value="instrumentalness">instrumentalness</option>
+            <option value="mode">mode</option>
+            <option value="time_signature">time_signature</option>
+            <option value="duration">duration</option>
+            <option value="loudness">loudness</option>
+            <option value="valence">valence</option>
+            <option value="danceability">danceability</option>
+            <option value="years">years</option>
+        </select>
+            <input type="radio" name="sort" value="Ascending" checked>Ascending
+            <input type="radio" name="sort" value="Descending">Descending<br>
+            Limit: <input name="limit" type="number">
+            <input class="querySubmit" type="submit">
+        </div>
+    </form>
+    <button onclick="javascript:resetForm()">Reset Form</button>
 </div>
 <div id="results">
 
 </div>
- <script>
-     $(document).ready(function () {
-         $('.checkAll').click(function () {
-             if($('.displayOptions input:checked').length == $('.displayOptions input').length){
-                 $('.displayOptions input').prop("checked", false);
-             } else {
-                 $('.displayOptions input').prop("checked", true);
-             }
-         });
-     });
+<script>
+    $(document).ready(function () {
+        $('.checkAll').click(function () {
+            if ($('.displayOptions input:checked').length == $('.displayOptions input').length) {
+                $('.displayOptions input').prop("checked", false);
+                $('.displayOptions ul li').css('background', '#646464');
+            } else {
+                $('.displayOptions input').prop("checked", true);
+                $('.displayOptions ul li').css('background', '#232323');
+            }
+        });
+        $('.displayOptions ul li').click(function () {
+            if ($(this).children('input').is(":checked")) {
+                $(this).children('input').prop("checked", false);
+                $(this).css('background', '#646464');
+            } else {
+                $(this).children('input').prop("checked", true);
+                $(this).css('background', '#232323');
+            }
+        });
+    });
 
-     function resetForm() {
-         document.getElementById("queryForm").reset();
-     }
-        function printAll() {
-            $.ajax({
-                type: 'POST',
-                data: {values:"All"},
-                url: 'db.php', // Your form script
-                success: function (msg) {
-                    $('#results').html(msg);
-                }
-            });
-        }
-        function dbHandler() {
-                var formValues = $('form :input');
-                var values = {};
-                formValues.each(function () {
-                    if ($(this).attr('type') == 'radio') {
-                        if ($(this).is(':checked')) {
-                            values[this.name] = $(this).val();
-                        }
-                        } else {
+    function resetForm() {
+        document.getElementById("queryForm").reset();
+    }
+
+    function printAll() {
+        $.ajax({
+            type: 'POST',
+            data: {values: "All"},
+            url: 'db.php', // Your form script
+            success: function (msg) {
+                $('#results').html(msg);
+            }
+        });
+    }
+
+    function dbHandler() {
+        var formValues = $('form :input');
+        var values = {};
+        formValues.each(function () {
+                if ($(this).attr('type') == 'radio') {
+                    if ($(this).is(':checked')) {
                         values[this.name] = $(this).val();
                     }
+                } else {
+                    values[this.name] = $(this).val();
                 }
-                );
-                $.ajax({
-                    type: 'POST',
-                    data: {values: values},
-                    url: 'db.php',
-                    success: function (msg) {
-                        $('#results').html(msg);
-						$('.displayOptions input:checked').each(function(){
-						var display = $(this).val();	
-						$("."+display).addClass("display");
-				});
-                    }
-                });
-				
-                return false;
+            }
+        );
+        if ($('.displayOptions input:checked').length != 0) {
+            $.ajax({
+                type: 'POST',
+                data: {values: values},
+                url: 'db.php',
+                success: function (msg) {
+                    $('#results').html(msg);
+                    $('.displayOptions input:checked').each(function () {
+                        var display = $(this).val();
+                        $("." + display).addClass("display");
+                    });
+                }
+            });
+        } else {
+            $('#results').html("<- Please choose your columns and resubmit.")
         }
-        function remove() {
-            $('#results').html('');
-        }
-    </script>
+        return false;
+    }
+
+    function remove() {
+        $('#results').html('');
+    }
+</script>
 </body>
 </html>
